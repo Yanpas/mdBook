@@ -117,7 +117,7 @@ $( document ).ready(function() {
     });
 
     function set_theme(theme) {
-        let ace_theme;
+        var ace_theme;
 
         if (theme == 'coal' || theme == 'navy') {
             $("[href='ayu-highlight.css']").prop('disabled', true);
@@ -214,7 +214,7 @@ $( document ).ready(function() {
         buttons.prepend("<i class=\"fa fa-play play-button hidden\" title=\"Run this code\"></i>");
         buttons.prepend("<i class=\"fa fa-copy clip-button\" title=\"Copy to clipboard\"><i class=\"tooltiptext\"></i></i>");
 
-        let code_block = pre_block.find("code").first();
+        var code_block = pre_block.find("code").first();
         if (window.ace && code_block.hasClass("editable")) {
             buttons.prepend("<i class=\"fa fa-history reset-button\" title=\"Undo changes\"></i>");
         }
@@ -227,7 +227,7 @@ $( document ).ready(function() {
         });
         buttons.find(".reset-button").click(function() {
             if (!window.ace) { return; }
-            let editor = window.ace.edit(code_block.get(0));
+            var editor = window.ace.edit(code_block.get(0));
             editor.setValue(editor.originalCode);
             editor.clearSelection();
         });
@@ -236,7 +236,7 @@ $( document ).ready(function() {
     var clipboardSnippets = new Clipboard('.clip-button', {
         text: function(trigger) {
             hideTooltip(trigger);
-            let playpen = $(trigger).parents(".playpen");
+            var playpen = $(trigger).parents(".playpen");
             return playpen_text(playpen);
         }
     });
@@ -256,7 +256,7 @@ $( document ).ready(function() {
         contentType: "application/json",
         success: function(response){
             // get list of crates available in the rust playground
-            let playground_crates = response.crates.map(function(item) {return item["id"];} );
+            var playground_crates = response.crates.map(function(item) {return item["id"];} );
             $(".playpen").each(function(block) {
                 handle_crate_list_update($(this), playground_crates);
             });
@@ -266,10 +266,10 @@ $( document ).ready(function() {
 });
 
 function playpen_text(playpen) {
-    let code_block = playpen.find("code").first();
+    var code_block = playpen.find("code").first();
 
     if (window.ace && code_block.hasClass("editable")) {
-        let editor = window.ace.edit(code_block.get(0));
+        var editor = window.ace.edit(code_block.get(0));
         return editor.getValue();
     } else {
         return code_block.get(0).textContent;
@@ -282,9 +282,9 @@ function handle_crate_list_update(playpen_block, playground_crates) {
 
     // and install on change listener to dynamically update ACE editors
     if (window.ace) {
-        let code_block = playpen_block.find("code").first();
+        var code_block = playpen_block.find("code").first();
         if (code_block.hasClass("editable")) {
-            let editor = window.ace.edit(code_block.get(0));
+            var editor = window.ace.edit(code_block.get(0));
             editor.on("change", function(e){
                 update_play_button(playpen_block, playground_crates);
             });
@@ -360,7 +360,7 @@ function run_rust_code(code_block) {
         result_block = code_block.find(".result");
     }
 
-    let text = playpen_text(code_block);
+    var text = playpen_text(code_block);
     
     var params = {
 	channel: "stable",
